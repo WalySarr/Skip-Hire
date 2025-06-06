@@ -1,54 +1,197 @@
-# React + TypeScript + Vite
+Skip Hire Timeline Component
+Overview
+This React component displays available skips in a responsive timeline format. It fetches skip data from an API and presents it in either a horizontal layout for desktop or vertical layout for mobile devices. Users can select multiple skips and see a summary of their selection.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Key Features
+Responsive design (mobile/desktop layouts)
 
-Currently, two official plugins are available:
+Skip selection functionality
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Real-time price calculation
 
-## Expanding the ESLint configuration
+Loading states and error handling
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Clean, modern UI with smooth animations
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Component Structure
+The project is organized into several focused components:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Timeline.tsx (Main Component)
+Manages the core logic including:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Data fetching from API
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Responsive layout detection
+
+State management (selected skips, loading, errors)
+
+Price calculation and date formatting
+
+Rendering the appropriate timeline view
+
+2. HorizontalTimeline.tsx
+Renders the desktop-optimized timeline with:
+
+Horizontal card layout
+
+Animated timeline dots
+
+Skip details display
+
+Selection highlighting
+
+3. VerticalTimeline.tsx
+Renders the mobile-optimized timeline with:
+
+Vertical card stacking
+
+Connectors between items
+
+Mobile-friendly information hierarchy
+
+Touch-friendly selection
+
+4. LoadingSpinner.tsx
+Displays a loading state with:
+
+CSS spinner animation
+
+Loading message
+
+5. ErrorMessage.tsx
+Handles error states with:
+
+Error icon
+
+Custom error message
+
+Retry button
+
+6. types.ts
+Contains TypeScript type definitions:
+
+Skip interface for API data
+
+TimelineProps for component props
+
+Technical Approach
+Responsive Design:
+
+Uses window resize event listener
+
+768px breakpoint for mobile/desktop switch
+
+Different components for each layout
+
+Data Management:
+
+Fetches data from REST API on component mount
+
+Stores skip data in React state
+
+Calculates total price (including VAT)
+
+User Interaction:
+
+Toggle selection with visual feedback
+
+Selected items summary panel
+
+Remove items from selection
+
+Performance:
+
+CSS animations for smooth transitions
+
+Efficient rendering with React.memo pattern
+
+Conditional rendering of components
+
+Getting Started
+Prerequisites
+Node.js (v14+)
+
+React (v17+)
+
+Axios (for API calls)
+
+Installation
+Create a new React app:
+
+bash
+npx create-react-app skip-timeline
+cd skip-timeline
+Install dependencies:
+
+bash
+npm install axios
+Add component files to src/components/Timeline/
+
+Import the main component:
+
+jsx
+// App.js
+import Timeline from './components/Timeline/Timeline';
+Customization
+API Endpoint:
+
+Modify the URL in Timeline.tsx:
+
+jsx
+const response = await axios.get("https://app.wewantwaste.co.uk/api/skips/by-location?postcode=NR32&area=Lowestoft");
+Styling:
+
+Edit Timeline.css for visual customization
+
+Modify breakpoint in resize handler:
+
+jsx
+setIsMobile(window.innerWidth < 768);
+Content:
+
+Update headers and labels in the JSX files
+
+Modify date formatting in formatDate function
+
+Best Practices
+Type Safety:
+
+Strict TypeScript interfaces for props and state
+
+Type checking for API responses
+
+Component Separation:
+
+Single Responsibility Principle
+
+Reusable sub-components
+
+Error Handling:
+
+Graceful error states
+
+User-friendly error messages
+
+Retry mechanism
+
+Accessibility:
+
+Semantic HTML structure
+
+Sufficient color contrast
+
+Interactive elements properly labeled
+
+Future Improvements
+Add pagination for large skip lists
+
+Implement sorting/filtering options
+
+Add animations for selection changes
+
+Integrate with a state management library (Redux/Zustand)
+
+Add tests using React Testing Library
+
+This component demonstrates modern React patterns with TypeScript, responsive design principles, and clean component architecture. The separation into focused files enhances maintainability and allows for easier collaboration.
+
